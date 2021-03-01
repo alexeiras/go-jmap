@@ -22,7 +22,7 @@ type Client struct {
 	// HTTPClient to use for requests. Set to http.DefaultClient by New.
 	HTTPClient *http.Client
 
-	// Value of Authentication header.
+	// Value of the Authorization header.
 	Authentication string
 
 	// Session endpoint URL. Must be set before any request.
@@ -85,7 +85,7 @@ func (c *Client) UpdateSession() (*jmap.Session, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authentication", c.Authentication)
+	req.Header.Set("Authorization", c.Authentication)
 
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
@@ -152,7 +152,7 @@ func (c *Client) RawSend(r *jmap.Request) (*jmap.Response, error) {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authentication", c.Authentication)
+	req.Header.Set("Authorization", c.Authentication)
 
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
@@ -208,7 +208,7 @@ func (c *Client) Upload(account jmap.ID, blob io.Reader) (*jmap.BlobInfo, error)
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authentication", c.Authentication)
+	req.Header.Set("Authorization", c.Authentication)
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -247,7 +247,7 @@ func (c *Client) Download(account, blob jmap.ID) (io.ReadCloser, error) {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authentication", c.Authentication)
+	req.Header.Set("Authorization", c.Authentication)
 
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
